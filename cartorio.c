@@ -1,96 +1,118 @@
+
 #include <stdio.h> //biblioteca de comunicação com o usuário
 #include <stdlib.h> //biblioteca de alocação de espaço em memória
 #include <locale.h> //biblioteca de alocação de texto por região
-#include <string.h> //biblioteca responsavel por cuidar das strings
+#include <string.h> //biblioteca responsável por cuidar das strings
 
-int registrar()
-{
-	char arquivo[50];
-	char cpf[50];
-	char nome[50];
-	char sobrenome[50];
-	char cargo[50];
-	
-	printf("Digite o cpf a ser cadastrado: ");
-	scanf("%s",cpf);
-	
-    strcpy(arquivo,cpf); //responsavel por criar os valores das strings
-    
-    FILE *file; //Cria o arquivo no banco de dados
-    file = fopen(arquivo,"w"); //Cria o arquivo no banco de dados
-    fprintf(file,cpf); //Salvo o valor da variavel
-    fclose(file); //Fecho o arquivo
-    
-    file = fopen(arquivo,"a"); //Atualiar a informaçao
-    fprintf(file,","); //Adicionando a virgula para ficar mais organizado visualmente
-    fclose(file);
-    
-    printf("Digite o nome a ser cadastrado/ ");
-    scanf("%s",nome);
-    
-    file = fopen(arquivo,"a");
-    fprintf(file,nome);
-    fclose(file);
-    
-    file = fopen(arquivo,"a"); //Atualiar a informaçao
-    fprintf(file,",");
-    fclose(file);
-    
-    printf("Digite o sobrenome a ser cadastrado: ");
-    scanf("%s",sobrenome);
-    
-    file = fopen(arquivo,"a");
-    fprintf(file, sobrenome);
-    fclose(file);
-    
-    file = fopen(arquivo,"a");
-    fprintf(file,",");
-    fclose(file);
-    
-    printf("Digite o cargo a ser cadastrado/ ");
-    scanf("%s",cargo);
-    
-    file = fopen(arquivo,"a");
-    fprintf(file,cargo);
-    fclose(file);
-    
-}
 
-int consultar()
+int registro() //Função responsávelpor cadastrar os usuários no sitema
 {
 	setlocale(LC_ALL, "portuguese"); //Definição da linguagem
 	
-    char cpf[50];
-    char conteudo[200];
-    
-    printf("Digite o cpf a ser consultado: ");
-    scanf("%s", cpf);
-    
-    FILE *file;
-    file = fopen(cpf,"r");
-    
-    if(file == NULL);
-    {
-    	printf("Nao foi possivel abrir o arquivo. Arquivo nao localizado!\n");
-    	
-	}
+	char arquivo[40]; //início da criação das variáveis
+	char cpf[40];
+	char nome[40];
+	char sobrenome[40];
+	char cargo[40]; //Final da criação das variáveis
 	
-	while(fgets(conteudo, 200, file) != NULL)
-	{
-		printf("\nEssas sao as informaçoes do usuario: ");
-		printf("%s",conteudo);
-		printf("\n\n");
-	}
+	printf("Digite o CPF a ser cadastrado: "); //Coletando informação do usuário
+	scanf("%s", cpf); //%s refere-se as strings
+	
+	strcpy(arquivo, cpf); //Responsável por copiar os valores das strings
+	
+	FILE *file; //cria o arquivo
+	file = fopen(arquivo, "w"); //cria o arquivo
+	fprintf(file,cpf); //salvo o valorda variavel
+	fclose(file); //fecha o arquivo
+	
+	file = fopen(arquivo, "a");
+	fprintf(file,",");
+	fclose(file);
+	
+	printf("Digite o nome a ser cadastrado: ");
+	scanf("%s",nome);
+	
+	file = fopen(arquivo, "a");
+	fprintf(file,nome);
+	fclose(file);
+	
+	file = fopen(arquivo, "a");
+	fprintf(file,",");
+	fclose(file);
+	
+	printf("Digite o sobrenome a ser cadastrado: ");
+	scanf("%s", sobrenome);
+	
+	file = fopen(arquivo, "a");
+	fprintf(file,sobrenome);
+	fclose(file);
+	
+	file = fopen(arquivo, "a");
+	fprintf(file,",");
+	fclose(file);
+	
+	printf("Digite o cargo a ser cadastrado: ");
+	scanf("%s", cargo);
+	
+	file = fopen(arquivo, "a");
+	fprintf(file,cargo);
+	fclose(file);
 	
 	system("pause");
 	
 }
 
+int consulta()
+{
+	setlocale(LC_ALL, "portuguese"); //Definição da linguagem
+	
+	char cpf[40];
+	char conteudo[200];
+	
+	printf("Digite o CPF a ser consultado: ");
+	scanf("%s",cpf);
+	
+	FILE *file;
+	file = fopen(cpf,"r");
+	
+	if(file == NULL)
+	{
+		printf("Não foi possível abrir o arquivo, não localizado!.\n");
+	}
+	
+	while (fgets(conteudo, 200, file) != NULL)
+	{
+		printf("\nEssas são as informações do usuário: ");
+		printf("%s", conteudo);
+		printf("\n\n");
+	}
+	
+	system("pause");
+}
+
 int deletar()
 {
-	printf("Você escolheu deletar um nome.\n");
-		    system("pause");
+	setlocale(LC_ALL, "portuguese"); //Definição da linguagem
+	
+	char cpf[40];
+	
+	printf("Digite o CPF do usuário a ser deletado: ");
+	scanf("%s",cpf);
+	
+	remove(cpf);
+	
+	
+	FILE *file;
+	file = fopen(cpf, "r");
+	
+	if(file == NULL)
+	{
+		printf("\n\n\nO usuário não se encontra no sistema!.\n\n\n");
+		system("pause");
+		
+	}
 }
+
 
 int main()
 {    
@@ -100,7 +122,7 @@ int main()
     for(laco=1;laco=1;)
     {
 	
-	    system("cls");
+	    system("cls"); //Responsável por limpar a tela
 	    
         setlocale(LC_ALL, "portuguese"); //Definição da linguagem
     
@@ -119,11 +141,11 @@ int main()
          switch(opcao)
 		{
 		    case 1:
-			registrar();
+			registro(); //Chamada de funções
 		    break;
 		
 		    case 2:
-		    consultar();
+		    consulta();
 			break;
 			
 			case 3:
@@ -131,17 +153,15 @@ int main()
 			break;
 			
 			case 4:
-			printf("Obrigada por utilizar o sistema!\n");
+			printf("Obrigado por utilizar o sistema!\n\n");
 			return 0;
 			break;
-				
+			
 			default:
 		    printf("Essa opção não está disponível!\n");
     	    system("pause");
     	    break;
-		}
+		} //Fim da seleção
     
     }    
 }
-
-
